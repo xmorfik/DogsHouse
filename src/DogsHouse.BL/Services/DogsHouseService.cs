@@ -10,20 +10,20 @@ namespace DogsHouse.BL.Services;
 
 public class DogsHouseService : IDogsHouseService
 {
-    private readonly IUnitOfWork _dbContextScope;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IDogRepository _dogRepository;
     public DogsHouseService(
-        IUnitOfWork dbContextScope,
+        IUnitOfWork unitOfWork,
         IDogRepository dogRepository)
     {
-        _dbContextScope = dbContextScope;
+        _unitOfWork = unitOfWork;
         _dogRepository = dogRepository;
     }
 
     public async Task<Dog> Create(Dog dog)
     {
         _dogRepository.Create(dog);
-        await _dbContextScope.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return dog;
     }
